@@ -5,7 +5,7 @@ interface UpdateMealUseCaseRequest {
   mealId: string;
   userId: string;
   name: string;
-  description: string;
+  description: string | null;
   dateTime: Date;
   isOnDiet: boolean;
 }

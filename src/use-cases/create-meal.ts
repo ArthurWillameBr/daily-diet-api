@@ -4,7 +4,7 @@ import { Meal } from "@prisma/client";
 interface CreateMealUseCaseRequest {
   userId: string;
   name: string;
-  description: string;
+  description: string | null;
   dateTime: Date;
   isOnDiet: boolean;
 }
