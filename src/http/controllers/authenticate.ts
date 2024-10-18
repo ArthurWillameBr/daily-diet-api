@@ -1,5 +1,6 @@
 import { PrismaUserRepository } from "@/repositories/prisma/prisma-user-repository";
 import { AuthenticateUseCase } from "@/use-cases/authenticate";
+import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
@@ -19,8 +20,8 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
             password
         })
     } catch (error) {
-        if(error) {
-            return reply.status(400).send({message: "User not found"})
+        if(error instanceof InvalidCredentialsError) {
+            return reply.status(400).send({message: error.message})
         }
         throw error
     }
