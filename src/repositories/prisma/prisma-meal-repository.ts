@@ -3,6 +3,15 @@ import { MealRepository } from "../meal-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaMealRepository implements MealRepository {
+ async countTotalMealsOutsideDietByUserId(userId: string) {
+    const mealsOutsideDietCount = await prisma.meal.count({
+      where: {
+        user_id: userId,
+        is_on_diet: false
+      }
+    })
+    return mealsOutsideDietCount
+  }
  async countTotalMealsWithinDietByUserId(userId: string) {
     const mealsWithinDietCount = await prisma.meal.count({
       where: {
