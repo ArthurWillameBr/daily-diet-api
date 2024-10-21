@@ -3,6 +3,14 @@ import { MealRepository } from "../meal-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaMealRepository implements MealRepository {
+  async countTotalMealsByUserId(userId: string) {
+    const mealsCount = await prisma.meal.count({
+      where: {
+        user_id: userId
+      }
+    })
+    return mealsCount
+  }
   async findByMealIdAndUserId(mealId: string, userId: string) {
     const meal = await prisma.meal.findUnique({
       where: {
