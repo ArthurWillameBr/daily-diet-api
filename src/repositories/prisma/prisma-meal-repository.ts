@@ -3,6 +3,14 @@ import { MealRepository } from "../meal-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaMealRepository implements MealRepository {
+  async findAllByUserId(userId: string) {
+    const meals = await prisma.meal.findMany({
+      where: {
+        user_id: userId,
+      }
+    })
+    return meals
+  }
   async update(id: string, data: Prisma.MealUncheckedUpdateInput) {
     const meal = await prisma.meal.update({
       where: {
