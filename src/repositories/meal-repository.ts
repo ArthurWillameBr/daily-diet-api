@@ -8,4 +8,5 @@ export interface MealRepository {
     findAllByUserId(userId: string): Promise<Meal[]>
     findByMealIdAndUserId(mealId: string, userId: string): Promise<Meal | null>
     countTotalMealsByUserId(userId: string): Promise<number>
+    countTotalMealsWithinDietByUserId(userId: string): Promise<number>
 }
