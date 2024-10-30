@@ -7,11 +7,11 @@ export async function GetUserTotalMealsOutsideDiet(
   reply: FastifyReply
 ) {
   const mealsRepository = new PrismaMealRepository();
-  const getUserTotalMealsWithinDiet = new GetUserTotalMealsOutsideDietUseCase(
+  const getUserTotalMealsOutsideDiet = new GetUserTotalMealsOutsideDietUseCase(
     mealsRepository
   );
 
-  const { mealsOutsideDietCount } = await getUserTotalMealsWithinDiet.execute({
+  const { mealsOutsideDietCount } = await getUserTotalMealsOutsideDiet.execute({
     userId: request.user.sub,
   });
 
