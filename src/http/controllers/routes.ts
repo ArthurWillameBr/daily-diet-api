@@ -5,6 +5,7 @@ import { CreateMeal } from "./create-meal";
 import { VerifyJWT } from "../middlewares/verify-jwt";
 import { GetMeals } from "./get-meals";
 import { GetMealsById } from "./get-meals-by-id";
+import { GetUserTotalMealsWithinDiet } from "./get-user-total-meals-within-diet";
 
 export async function routes(app: FastifyInstance) {
     app.post("/users", register)
@@ -13,4 +14,5 @@ export async function routes(app: FastifyInstance) {
     app.post("/meals", {onRequest: VerifyJWT}, CreateMeal)
     app.get("/meals", {onRequest: VerifyJWT}, GetMeals)
     app.get("/meals/:mealId", {onRequest: VerifyJWT}, GetMealsById)
+    app.get("/meals/within-diet", {onRequest: VerifyJWT}, GetUserTotalMealsWithinDiet)
 }
