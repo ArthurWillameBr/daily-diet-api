@@ -8,5 +8,12 @@ export async function GetMeals(request: FastifyRequest, reply: FastifyReply) {
 
   const { meals } = await getMealsUseCase.execute({ userId: request.user.sub });
 
-  return reply.status(200).send({ meals });
+  const mealsWithHiddenUserId = meals.map((meal) => ({
+    ...meal,
+    user_id: undefined,
+  }));
+
+  return reply.status(200).send({
+    meals: mealsWithHiddenUserId,
+  });
 }
