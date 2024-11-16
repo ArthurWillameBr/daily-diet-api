@@ -7,7 +7,7 @@ export async function CreateMeal(request: FastifyRequest, reply: FastifyReply) {
   const createMealBodySchema = z.object({
     name: z.string(),
     description: z.string().nullable(),
-    dateTime: z.date(), //Conferir isso aqui depois
+    dateTime: z.string(), //Conferir isso aqui depois
     isOnDiet: z.boolean(),
   });
 
