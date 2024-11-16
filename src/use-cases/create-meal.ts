@@ -5,7 +5,7 @@ interface CreateMealUseCaseRequest {
   userId: string;
   name: string;
   description: string | null;
-  dateTime: Date;
+  dateTime: string;
   isOnDiet: boolean;
 }
 
