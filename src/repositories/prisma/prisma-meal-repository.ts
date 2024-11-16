@@ -3,31 +3,31 @@ import { MealRepository } from "../meal-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaMealRepository implements MealRepository {
- async countTotalMealsOutsideDietByUserId(userId: string) {
+  async countTotalMealsOutsideDietByUserId(userId: string) {
     const mealsOutsideDietCount = await prisma.meal.count({
       where: {
         user_id: userId,
-        is_on_diet: false
-      }
-    })
-    return mealsOutsideDietCount
+        is_on_diet: false,
+      },
+    });
+    return mealsOutsideDietCount;
   }
- async countTotalMealsWithinDietByUserId(userId: string) {
+  async countTotalMealsWithinDietByUserId(userId: string) {
     const mealsWithinDietCount = await prisma.meal.count({
       where: {
         user_id: userId,
-        is_on_diet: true
-      }
-    })
-    return mealsWithinDietCount
+        is_on_diet: true,
+      },
+    });
+    return mealsWithinDietCount;
   }
   async countTotalMealsByUserId(userId: string) {
     const mealsCount = await prisma.meal.count({
       where: {
-        user_id: userId
-      }
-    })
-    return mealsCount
+        user_id: userId,
+      },
+    });
+    return mealsCount;
   }
   async findByMealIdAndUserId(mealId: string, userId: string) {
     const meal = await prisma.meal.findUnique({
