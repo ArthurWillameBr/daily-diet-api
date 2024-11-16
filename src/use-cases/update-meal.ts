@@ -6,7 +6,7 @@ interface UpdateMealUseCaseRequest {
   userId: string;
   name: string;
   description: string | null;
-  dateTime: Date;
+  dateTime: string;
   isOnDiet: boolean;
 }
 
@@ -25,14 +25,14 @@ export class UpdateMealUseCase {
     description,
     dateTime,
   }: UpdateMealUseCaseRequest): Promise<UpdateMealUseCaseResponse> {
-    const meal = await this.mealRepository.findById(mealId)
+    const meal = await this.mealRepository.findById(mealId);
 
     if (!meal) {
-      throw new Error('Meal not found');
+      throw new Error("Meal not found");
     }
 
-    if(meal.user_id !== userId) {
-        throw new Error('Unauthorized');
+    if (meal.user_id !== userId) {
+      throw new Error("Unauthorized");
     }
 
     const updateMeal = await this.mealRepository.update(mealId, {
