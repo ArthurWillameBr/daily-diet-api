@@ -10,6 +10,7 @@ import { GetUserTotalMealsOutsideDiet } from "./get-user-total-meals-outside-die
 import { GetUserTotalMeals } from "./get-user-total-meals";
 import { UpdateMeal } from "./update-meal";
 import { GetLastRegisteredMeals } from "./get-last-registered-meals";
+import { GetBestOnDietSequence } from "./get-best-on-diet-sequence";
 
 export async function routes(app: FastifyInstance) {
   app.post("/users", register);
@@ -34,5 +35,10 @@ export async function routes(app: FastifyInstance) {
     "/meals/last-registered",
     { onRequest: VerifyJWT },
     GetLastRegisteredMeals
+  );
+  app.get(
+    "/meals/best-diet-sequence",
+    { onRequest: VerifyJWT },
+    GetBestOnDietSequence
   );
 }
