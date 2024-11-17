@@ -12,6 +12,7 @@ import { UpdateMeal } from "./update-meal";
 import { GetLastRegisteredMeals } from "./get-last-registered-meals";
 import { GetBestOnDietSequence } from "./get-best-on-diet-sequence";
 import { GenerateDietReport } from "./generate-diet-report";
+import { RevenueGeneration } from "./revenue-generation";
 
 export async function routes(app: FastifyInstance) {
   app.post("/users", register);
@@ -44,4 +45,10 @@ export async function routes(app: FastifyInstance) {
   );
 
   app.get("/meals/ai-report", { onRequest: VerifyJWT }, GenerateDietReport);
+
+  app.get(
+    "/meals/generate-recipe",
+    { onRequest: VerifyJWT },
+    RevenueGeneration
+  );
 }
