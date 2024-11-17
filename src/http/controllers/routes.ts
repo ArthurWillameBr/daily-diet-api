@@ -11,6 +11,7 @@ import { GetUserTotalMeals } from "./get-user-total-meals";
 import { UpdateMeal } from "./update-meal";
 import { GetLastRegisteredMeals } from "./get-last-registered-meals";
 import { GetBestOnDietSequence } from "./get-best-on-diet-sequence";
+import { GenerateDietReport } from "./generate-diet-report";
 
 export async function routes(app: FastifyInstance) {
   app.post("/users", register);
@@ -41,4 +42,6 @@ export async function routes(app: FastifyInstance) {
     { onRequest: VerifyJWT },
     GetBestOnDietSequence
   );
+
+  app.get("/meals/ai-report", { onRequest: VerifyJWT }, GenerateDietReport);
 }
