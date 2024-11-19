@@ -13,6 +13,7 @@ import { GetLastRegisteredMeals } from "./get-last-registered-meals";
 import { GetBestOnDietSequence } from "./get-best-on-diet-sequence";
 import { GenerateDietReport } from "./generate-diet-report";
 import { RevenueGeneration } from "./revenue-generation";
+import { GetGamificationStatus } from "./get-gamification-status";
 
 export async function routes(app: FastifyInstance) {
   app.post("/users", register);
@@ -50,5 +51,11 @@ export async function routes(app: FastifyInstance) {
     "/meals/generate-recipe",
     { onRequest: VerifyJWT },
     RevenueGeneration
+  );
+
+  app.get(
+    "/gamification/status",
+    { onRequest: VerifyJWT },
+    GetGamificationStatus
   );
 }
