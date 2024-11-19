@@ -1,4 +1,5 @@
 import { MealRepository } from "@/repositories/meal-repository";
+import { UsersRepository } from "@/repositories/users-repository";
 import { Meal } from "@prisma/client";
 
 interface CreateMealUseCaseRequest {
@@ -14,7 +15,10 @@ interface CreateMealUseCaseResponse {
 }
 
 export class CreateMealUseCase {
-  constructor(private mealRepository: MealRepository) {}
+  constructor(
+    private mealRepository: MealRepository,
+    private userRepository?: UsersRepository
+  ) {}
 
   async execute({
     userId,
@@ -30,6 +34,19 @@ export class CreateMealUseCase {
       is_on_diet: isOnDiet,
       user_id: userId,
     });
+
+    const experienceGained = isOnDiet ? 10 : 5;
+
+    const user = await this.userRepository?.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const updatedExperience = user.experience + experienceGained;
+
+    await this.userRepository?.updateExperience(userId, updatedExperience);
+
     return {
       meal,
     };
