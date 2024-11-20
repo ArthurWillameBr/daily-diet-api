@@ -23,7 +23,7 @@ export async function authenticate(
       password,
     });
 
-    const token = reply.jwtSign(
+    const token = await reply.jwtSign(
       {},
       {
         sign: {
@@ -31,7 +31,7 @@ export async function authenticate(
         },
       }
     );
-
+    console.log(token);
     return reply.status(200).send({
       token,
     });
