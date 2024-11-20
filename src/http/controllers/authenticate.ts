@@ -31,7 +31,6 @@ export async function authenticate(
         },
       }
     );
-    console.log(token);
     return reply.status(200).send({
       token,
     });
