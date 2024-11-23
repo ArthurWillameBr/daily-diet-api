@@ -5,8 +5,11 @@ interface GetMealsUseCaseRequest {
 }
 
 interface FormattedMeal {
+  id: string;
   time: string;
   name: string;
+  description: string | null;
+  date: Date;
   isOnDiet: boolean;
 }
 
@@ -39,7 +42,10 @@ export class GetMealsUseCase {
 
       acc[date].push({
         time,
+        id: meal.id,
         name: meal.name,
+        date: meal.date_time,
+        description: meal.description,
         isOnDiet: meal.is_on_diet,
       });
 

@@ -14,6 +14,7 @@ import { GetBestOnDietSequence } from "./get-best-on-diet-sequence";
 import { GenerateDietReport } from "./generate-diet-report";
 import { RevenueGeneration } from "./revenue-generation";
 import { GetGamificationStatus } from "./get-gamification-status";
+import { DeleteMeals } from "./delete-meal";
 
 export async function routes(app: FastifyInstance) {
   app.post("/users", register);
@@ -28,6 +29,7 @@ export async function routes(app: FastifyInstance) {
     { onRequest: VerifyJWT },
     GetUserTotalMealsWithinDiet
   );
+  app.delete("/meals/:mealId", { onRequest: VerifyJWT }, DeleteMeals);
   app.get(
     "/meals/outside-diet",
     { onRequest: VerifyJWT },
