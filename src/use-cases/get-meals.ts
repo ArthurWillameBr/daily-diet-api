@@ -50,12 +50,16 @@ export class GetMealsUseCase {
     const sortedDates = Object.keys(groupedMeals).sort((a, b) => {
       const dateA = new Date(a.split("/").reverse().join("-"));
       const dateB = new Date(b.split("/").reverse().join("-"));
-      return dateB.getTime() - dateA.getTime(); // Mais recente primeiro
+      return dateB.getTime() - dateA.getTime();
     });
 
     const formattedMeals = sortedDates.map((date) => ({
       date,
-      meals: groupedMeals[date],
+      meals: groupedMeals[date].sort((a, b) => {
+        const timeA = new Date(`1970-01-01T${a.time}:00`).getTime();
+        const timeB = new Date(`1970-01-01T${b.time}:00`).getTime();
+        return timeB - timeA;
+      }),
     }));
 
     return {
