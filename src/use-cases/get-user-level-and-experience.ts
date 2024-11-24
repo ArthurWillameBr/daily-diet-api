@@ -1,7 +1,4 @@
-import {
-  calculateExperienceToNextLevel,
-  calculateLevelFromExperience,
-} from "@/modules/gamification";
+import { calculateExperienceWithinLevel } from "@/modules/gamification";
 import { UsersRepository } from "@/repositories/users-repository";
 
 interface GetUserLevelAndExperienceRequest {
@@ -9,9 +6,9 @@ interface GetUserLevelAndExperienceRequest {
 }
 
 interface GetUserLevelAndExperienceResponse {
-  experience: number;
-  level: number;
-  experienceToNextLevel: number;
+  level: number; // Nível atual do jogador
+  experience: number; // Experiência relativa ao nível atual
+  totalExperienceForNextLevel: number; // Total de experiência necessária para o próximo nível
 }
 
 export class GetUserLevelAndExperienceUseCase {
@@ -26,14 +23,16 @@ export class GetUserLevelAndExperienceUseCase {
       throw new Error("User not found");
     }
 
-    const { experience } = user;
+    const { experience: totalExperience } = user;
 
-    const level = calculateLevelFromExperience(experience);
+    // Calcula nível, experiência relativa e total necessário para o próximo nível
+    const { level, relativeExperience, totalForNextLevel } =
+      calculateExperienceWithinLevel(totalExperience);
 
     return {
-      level,
-      experience,
-      experienceToNextLevel: calculateExperienceToNextLevel(level),
+      level, // Nível atual
+      experience: relativeExperience, // Experiência relativa ao nível atual
+      totalExperienceForNextLevel: totalForNextLevel, // Total necessário para o próximo nível
     };
   }
 }
