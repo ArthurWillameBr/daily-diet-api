@@ -15,6 +15,7 @@ import { GenerateDietReport } from "./generate-diet-report";
 import { RevenueGeneration } from "./revenue-generation";
 import { GetGamificationStatus } from "./get-gamification-status";
 import { DeleteMeals } from "./delete-meal";
+import { GetProfile } from "./get-profile";
 
 export async function routes(app: FastifyInstance) {
   app.post("/users", register);
@@ -41,6 +42,7 @@ export async function routes(app: FastifyInstance) {
     { onRequest: VerifyJWT },
     GetLastRegisteredMeals
   );
+  app.get("/profile", { onRequest: VerifyJWT }, GetProfile);
   app.get(
     "/meals/best-diet-sequence",
     { onRequest: VerifyJWT },

@@ -35,7 +35,7 @@ export class CreateMealUseCase {
       user_id: userId,
     });
 
-    const experienceGained = isOnDiet ? 10 : 5;
+    const experienceGained = isOnDiet ? 50 : 5;
 
     const user = await this.userRepository?.findById(userId);
 
