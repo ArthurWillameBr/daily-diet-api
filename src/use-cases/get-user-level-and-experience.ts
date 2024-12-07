@@ -10,6 +10,7 @@ interface GetUserLevelAndExperienceResponse {
   experience: number;
   totalExperienceForNextLevel: number;
   title: string;
+  creditsEarned: number;
 }
 
 export class GetUserLevelAndExperienceUseCase {
@@ -45,18 +46,36 @@ export class GetUserLevelAndExperienceUseCase {
       throw new Error("User not found");
     }
 
-    const { experience: totalExperience } = user;
+    const { experience: totalExperience, level: currentLevel, credits } = user;
 
-    const { level, relativeExperience, totalForNextLevel } =
-      calculateExperienceWithinLevel(totalExperience);
+    const {
+      level: newLevel,
+      relativeExperience,
+      totalForNextLevel,
+    } = calculateExperienceWithinLevel(totalExperience);
 
-    const title = this.getHonorificTitle(level);
+    let creditsEarned = 0;
+
+    if (newLevel > currentLevel) {
+      creditsEarned = newLevel - currentLevel; // Exemplo: 1 crédito por nível ganho
+      await this.userRepository.updateCredits(userId, credits + creditsEarned);
+      await this.userRepository.updateLevel(userId, newLevel);
+    }
+
+    const updatedUser = await this.userRepository.findById(userId);
+
+    if (!updatedUser) {
+      throw new Error("Failed to fetch updated user data");
+    }
+
+    const title = this.getHonorificTitle(newLevel);
 
     return {
-      level,
+      level: newLevel,
       experience: relativeExperience,
       totalExperienceForNextLevel: totalForNextLevel,
       title,
+      creditsEarned: updatedUser.credits,
     };
   }
 }

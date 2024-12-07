@@ -11,15 +11,21 @@ export async function GetGamificationStatus(
     userRepository
   );
 
-  const { experience, totalExperienceForNextLevel, level, title } =
-    await getUserLevelAndExperience.execute({
-      userId: request.user.sub,
-    });
+  const {
+    experience,
+    totalExperienceForNextLevel,
+    title,
+    level,
+    creditsEarned,
+  } = await getUserLevelAndExperience.execute({
+    userId: request.user.sub,
+  });
 
   return reply.status(201).send({
     experience,
     totalExperienceForNextLevel,
     level,
     title,
+    creditsEarned,
   });
 }

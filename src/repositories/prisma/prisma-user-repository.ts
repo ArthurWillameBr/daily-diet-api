@@ -3,16 +3,30 @@ import { UsersRepository } from "../users-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaUserRepository implements UsersRepository {
-  async updateExperience(userId: string, experience: number) {
+  async updateCredits(userId: string, credits: number) {
     await prisma.user.update({
       where: {
         id: userId,
       },
       data: {
-        experience,
+        credits,
       },
     });
   }
+  async updateExperience(userId: string, experience: number) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { experience },
+    });
+  }
+
+  async updateLevel(userId: string, level: number): Promise<void> {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { level },
+    });
+  }
+
   async findById(userId: string) {
     const user = await prisma.user.findUnique({
       where: {

@@ -1,4 +1,5 @@
 import { AiRevenueGeneration } from "@/service/ai-revenue-generation";
+import { UsersRepository } from "@/repositories/users-repository";
 
 interface RevenueGenerationUseCaseResponse {
   recipe: {
@@ -11,10 +12,36 @@ interface RevenueGenerationUseCaseResponse {
   };
 }
 
-export class RevenueGenerationUseCase {
-  constructor(private revenueGeneration: AiRevenueGeneration) {}
+interface RevenueGenerationUseCaseRequest {
+  userId: string;
+}
 
-  async execute(): Promise<RevenueGenerationUseCaseResponse> {
+export class RevenueGenerationUseCase {
+  private static readonly CREDITS_REQUIRED = 1;
+
+  constructor(
+    private revenueGeneration: AiRevenueGeneration,
+    private userRepository: UsersRepository
+  ) {}
+
+  async execute({
+    userId,
+  }: RevenueGenerationUseCaseRequest): Promise<RevenueGenerationUseCaseResponse> {
+    const user = await this.userRepository.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (user.credits < RevenueGenerationUseCase.CREDITS_REQUIRED) {
+      throw new Error("Insufficient credits");
+    }
+
+    await this.userRepository.updateCredits(
+      userId,
+      user.credits - RevenueGenerationUseCase.CREDITS_REQUIRED
+    );
+
     const recipe = await this.revenueGeneration.reportGeneration();
 
     return {
