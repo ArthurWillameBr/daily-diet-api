@@ -9,7 +9,7 @@ Daily Diet API é uma aplicação backend focada no controle de dietas com eleme
 - [Fastify](https://fastify.dev/) - Framework para construção de APIs REST.
 - [TypeScript](https://www.typescriptlang.org/) - Tipagem estática para maior segurança no desenvolvimento.
 - [Prisma ORM](https://www.prisma.io/) - Mapeamento objeto-relacional para manipulação de dados.
-- [PostgresSQL]([https://www.mysql.com/](https://www.postgresql.org/download/)) - Bancos de dados relacional
+- [PostgresSQL](https://www.postgresql.org/download/) - Bancos de dados relacional
 - [JWT](https://jwt.io/) - Autenticação baseada em tokens.
 
 ## Pré-requisitos ⚠
