@@ -34,7 +34,7 @@ $ npm install
 # Existe um arquivo chamado .env.example no projeto. Renomeie-o para .env e configure as variáveis de acordo com seu ambiente.
 
 # No arquivo .env, adicione a string de conexão com o banco de dados, como por exemplo:
-DATABASE_URL="mysql://user:password@localhost:3306/task_flow_db"
+DATABASE_URL="mysql://user:password@localhost:3306/diet_dail_db"
 
 # Execute as migrações do Prisma para criar as tabelas no banco de dados
 $ npx prisma migrate dev
